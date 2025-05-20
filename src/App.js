@@ -1,16 +1,15 @@
 import './App.css';
-import { Link } from 'react-router-dom'
+import Navbar from './components/Navbar';
 import React, { Component } from 'react'
+import NewsType from './components/NewsType';
+
 
 export default class App extends Component {
   render() {
     return (
       <div>
-        <navbar className="navbar navbar-expand-lg navbar-light bg-light">
-          <div className="container-fluid">
-            <Link className="navbar-brand" to="/">News Mirchi</Link>
-          </div>
-        </navbar>
+        <Navbar/>
+        <NewsType/>
       </div>
     )
   }
