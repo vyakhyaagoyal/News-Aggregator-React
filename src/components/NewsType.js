@@ -4,31 +4,201 @@ import NewsItem from './NewsItem'
 export class News extends Component {
   constructor() {
     super();
-    this.state={
-      results:this.results,
+    this.state = {
+      results: this.results,
       loading: false
     }
   }
 
+  results = [
+    {
+      "article_id": "548c23386288589af28bc3506faf353a",
+      "title": "Julia Roberts' beloved dog has died",
+      "link": "https://home.nzcity.co.nz/news/article.aspx?id=422612",
+      "keywords": null,
+      "creator": null,
+      "description": "The 'Pretty Woman' actress adopted Myrtle from a rescue centre as a pup in 2006 but she revealed on Friday (16.05.25) that the pooch, who she hailed a \"legend\", had passed away",
+      "content": "ONLY AVAILABLE IN PAID PLANS",
+      "pubDate": "2025-05-19 23:36:49",
+      "pubDateTZ": "UTC",
+      "image_url": null,
+      "video_url": null,
+      "source_id": "nzcity",
+      "source_name": "Nzcity Personal",
+      "source_priority": 2022860,
+      "source_url": "https://home.nzcity.co.nz",
+      "source_icon": "https://i.bytvi.com/domain_icons/nzcity.png",
+      "language": "english",
+      "country": [
+        "new zealand"
+      ],
+      "category": [
+        "top"
+      ],
+      "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "ai_org": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "duplicate": false
+    },
+    {
+      "article_id": "eee91450cd08cd66e573697eb00d7bf1",
+      "title": "Man charged with killing Creighton baseball administrator found not guilty by reason of insanity",
+      "link": "https://journalstar.com/news/state-regional/article_aeb4e394-ae73-5d44-8205-694d8e720ee5.html",
+      "keywords": null,
+      "creator": null,
+      "description": "A 47-year-old man charged in the killing of Creighton baseball administrator Christopher Gradoville was found not to be responsible by reason of insanity.",
+      "content": "ONLY AVAILABLE IN PAID PLANS",
+      "pubDate": "2025-05-19 23:30:00",
+      "pubDateTZ": "UTC",
+      "image_url": "https://bloximages.chicago2.vip.townnews.com/journalstar.com/content/tncms/assets/v3/editorial/a/eb/aeb4e394-ae73-5d44-8205-694d8e720ee5/682bb0990d080.preview.jpg?crop=1782%2C936%2C8%2C178&order=crop%2Cresize&resize=1200%2C630",
+      "video_url": null,
+      "source_id": "journalstar",
+      "source_name": "Lincoln Journal Star",
+      "source_priority": 11867,
+      "source_url": "https://journalstar.com",
+      "source_icon": "https://i.bytvi.com/domain_icons/journalstar.jpg",
+      "language": "english",
+      "country": [
+        "united states of america"
+      ],
+      "category": [
+        "top"
+      ],
+      "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "ai_org": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "duplicate": false
+    },
+    {
+      "article_id": "4c3ec3754ca6b134935b8f7a00178389",
+      "title": "Even one sip of these drinks can increase risk of Alzheimer's",
+      "link": "https://timesofindia.indiatimes.com/life-style/health-fitness/diet/taking-even-one-sip-of-these-3-drinks-can-increase-our-risk-of-alzheimers-what-to-do-instead/photostory/121269770.cms",
+      "keywords": null,
+      "creator": [
+        "TOI Lifestyle Desk"
+      ],
+      "description": "This isn’t about guilt. It’s about learning better, living better, and loving the brain enough to protect it. After all, memory is not just about recall—it’s about joy, relationships, identity.",
+      "content": "ONLY AVAILABLE IN PAID PLANS",
+      "pubDate": "2025-05-19 23:30:00",
+      "pubDateTZ": "UTC",
+      "image_url": "https://static.toiimg.com/photo/121269840.cms",
+      "video_url": null,
+      "source_id": "toi",
+      "source_name": "The Times Of India",
+      "source_priority": 239,
+      "source_url": "https://timesofindia.indiatimes.com",
+      "source_icon": "https://i.bytvi.com/domain_icons/toi.png",
+      "language": "english",
+      "country": [
+        "india"
+      ],
+      "category": [
+        "entertainment"
+      ],
+      "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "ai_org": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "duplicate": false
+    },
+    {
+      "article_id": "55bc3593e5ce103f6cf6c05d94bc0901",
+      "title": "AAP appoints Board heads, draws flak from opposition",
+      "link": "https://timesofindia.indiatimes.com/city/chandigarh/aap-appoints-board-heads-draws-flak-from-opposition/articleshow/121276300.cms",
+      "keywords": null,
+      "creator": null,
+      "description": null,
+      "content": "ONLY AVAILABLE IN PAID PLANS",
+      "pubDate": "2025-05-19 23:24:55",
+      "pubDateTZ": "UTC",
+      "image_url": "https://static.toiimg.com/thumb/msid-121276299,width-1070,height-580,imgsize-36406,resizemode-75,overlay-toi_sw,pt-32,y_pad-40/photo.jpg",
+      "video_url": null,
+      "source_id": "toi",
+      "source_name": "The Times Of India",
+      "source_priority": 239,
+      "source_url": "https://timesofindia.indiatimes.com",
+      "source_icon": "https://i.bytvi.com/domain_icons/toi.png",
+      "language": "english",
+      "country": [
+        "india"
+      ],
+      "category": [
+        "world"
+      ],
+      "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "ai_org": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "duplicate": false
+    },
+    {
+      "article_id": "862afa966bb86997c6f312d0dc2eda24",
+      "title": "Singer Dawn Richard says Sean 'Diddy' Combs threatened her with death after she saw him beat Cassie",
+      "link": "https://www.citizentribune.com/news/national/singer-dawn-richard-says-sean-diddy-combs-threatened-her-with-death-after-she-saw-him/article_bc38e2dc-d543-54a3-8a89-4a9778dd9dce.html",
+      "keywords": null,
+      "creator": [
+        "By MICHAEL R. SISAK and LARRY NEUMEISTER - Associated Press"
+      ],
+      "description": "Singer Dawn Richard has told the jury in the sex trafficking and racketeering trial of Sean “Diddy” Combs that he threatened her with death if she told anyone that she saw the influential hip-hop promoter beat his longtime girlfriend, the...",
+      "content": "ONLY AVAILABLE IN PAID PLANS",
+      "pubDate": "2025-05-19 23:22:26",
+      "pubDateTZ": "UTC",
+      "image_url": "https://bloximages.newyork1.vip.townnews.com/citizentribune.com/content/tncms/assets/v3/editorial/c/94/c94a2ff0-300a-5619-80a2-47861610f090/682bc031a9a89.image.jpg?resize=300%2C226",
+      "video_url": null,
+      "source_id": "citizentribune",
+      "source_name": "Citizentribune",
+      "source_priority": 47354,
+      "source_url": "https://www.citizentribune.com",
+      "source_icon": "https://i.bytvi.com/domain_icons/citizentribune.jpg",
+      "language": "english",
+      "country": [
+        "united states of america"
+      ],
+      "category": [
+        "top"
+      ],
+      "sentiment": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "sentiment_stats": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_tag": "ONLY AVAILABLE IN PROFESSIONAL AND CORPORATE PLANS",
+      "ai_region": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "ai_org": "ONLY AVAILABLE IN CORPORATE PLANS",
+      "duplicate": true
+    }
+  ]
+
   render() {
-    let {title, description,imageurl,link} = this.props;
+    let { title, description, imageurl, link } = this.props;
     return (
       <div className='container'>
         <h2 className='text-center'>News Mirchi - Top Headlines</h2>
+
+
+
         <div className="row">
-          <div className="col md-3">
-            <NewsItem title="Vancouver Whitecaps not discounting Valour FC heading into Canadian Championship" description="The Vancouver Whitecaps heard analysts' predictions ahead of the Major League Soccer season. Pundits mused the club would finish 14th or 15th in the standings, that the 'Caps were a middling team that would miss the playoffs." imageurl="https://www.vmcdn.ca/f/files/shared/feeds/cp/2025/05/61b1ad0acdb4df82e82e484601a4fa703f6b81295348ee837d427b0ad53ef901.jpg;w=960" link="https://www.sootoday.com/national-sports/vancouver-whitecaps-not-discounting-valour-fc-heading-into-canadian-championship-10681477" />
-          </div>
-          <div className="col md-3">
-            <NewsItem title={title} description={description} imageurl={imageurl} />
-          </div>
-          <div className="col md-3">
-            <NewsItem title={title} description={description} imageurl={imageurl} />
-          </div>
+          {this.state.results.map((element) => {
+            return <div className="col md-3" key={element.article_id}>
+              <NewsItem
+                title={element.title ? element.title.slice(0, 45) : ""}
+                description={element.description ? element.description.slice(0, 90) : ""}
+                imageurl={element.image_url}
+                link={element.link}
+              />
+            </div>
+          })}
+
+          {/* <NewsItem title="Vancouver Whitecaps not discounting Valour FC heading into Canadian Championship" description="The Vancouver Whitecaps heard analysts' predictions ahead of the Major League Soccer season. Pundits mused the club would finish 14th or 15th in the standings, that the 'Caps were a middling team that would miss the playoffs." imageurl="https://www.vmcdn.ca/f/files/shared/feeds/cp/2025/05/61b1ad0acdb4df82e82e484601a4fa703f6b81295348ee837d427b0ad53ef901.jpg;w=960" link="https://www.sootoday.com/national-sports/vancouver-whitecaps-not-discounting-valour-fc-heading-into-canadian-championship-10681477" />
+           */}
+
         </div>
-        </div>
-        )
+      </div>
+    )
   }
 }
 
-        export default News
+export default News
