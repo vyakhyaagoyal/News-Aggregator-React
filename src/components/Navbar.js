@@ -12,16 +12,27 @@ export class Navbar extends Component {
             <div>
                 <nav className="navbar navbar-expand-lg bg-body-tertiary">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="/">News Mirchi</a>
+                        <Link className="navbar-brand" to="/">News Observer4</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                             {/* <span className="navbar-toggler-icon"></span> */}
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                             <div className="navbar-nav">
-                                <a className="nav-link active" aria-current="page" href="/">Home</a>
-                                <a className="nav-link" href="/">Features</a>
-                                <a className="nav-link" href="/">Pricing</a>
-                                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
+                                <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+                                <li className='nav-item dropdown'>
+                                    <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</Link>
+                                    <ul className="dropdown-menu">
+                                        <li><Link className="dropdown-item" to="/business">Business</Link></li>
+                                        <li><Link className="dropdown-item" to="/entertainment">Entertainment</Link></li>
+                                        <li><Link className="dropdown-item" to="/health">Health</Link></li>
+                                        <li><Link className="dropdown-item" to="/science">Science</Link></li>
+                                        <li><Link className="dropdown-item" to="/sports">Sports</Link></li>
+                                        <li><Link className="dropdown-item" to="/technology">Technology</Link></li>
+                                    </ul>
+                                </li>
+
+                                <Link className="nav-link" to="/">About</Link>
+
                             </div>
                         </div>
                     </div>

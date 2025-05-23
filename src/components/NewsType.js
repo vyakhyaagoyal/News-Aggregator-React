@@ -1,20 +1,31 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './spinner'
+import PropTypes from 'prop-types'
 
 export class News extends Component {
+  static defaultProps = {
+    category: 'top',
+  }
+
+  static propTypes={
+    category: PropTypes.string,
+  }
+
   constructor() {
     super();
 
     this.state = {
       results: [],
-      loading: false,
+      loading: true,
       page: 1,
       nextPage: null,
     }
   }
 
   async componentDidMount() {
-    let api = "https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1";
+    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
+    this.setState({ loading: true });
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
@@ -24,14 +35,36 @@ export class News extends Component {
         results: results,
         nextPage: parsedData.nextPage,
         page: 1,
-        totalResults: parsedData.totalResults
+        totalResults: parsedData.totalResults,
+        loading: false
       }
     );
   };
 
+  async componentDidUpdate(prevProps){
+    if (prevProps.category !== this.props.category) {
+    this.setState({loading:true});
+    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
+    let data = await fetch(api);
+    let parsedData = await data.json();
+    let results = parsedData.results;
+
+    this.setState(
+      {
+        results: results,
+        nextPage: parsedData.nextPage,
+        page: 1,
+        totalResults: parsedData.totalResults,
+        loading: false
+      }
+    );
+  }
+  }
+
   handleNextClick = async () => {
 
-    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.nextPage}`;
+    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.nextPage}&category=${this.props.category}`;
+    this.setState({ loading: true });
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
@@ -47,13 +80,14 @@ export class News extends Component {
   };
 
   handlePreviousClick = async () => {
-    //   let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.page - 1}`;
+    //   let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.page - 1}&category=${this.props.category}`;
+    // this.setState({ loading: true });
     //   let data = await fetch(api);
     //   let parsedData = await data.json();
     //   let results = parsedData.results;
 
     //   this.setState({
-    //   results: parsedData.results,
+    //   results: results,
     //   nextPage: parsedData.nextPage,
     //   page: this.state.page - 1,
     //   loading: false
@@ -65,8 +99,8 @@ export class News extends Component {
     // let { title, description, imageurl, link } = this.props;
     return (
       <div className='container'>
-        <h2 className='text-center'>News Mirchi - Top Headlines</h2>
-
+        <h2 className='text-center'>News Observer- Top Headlines</h2>
+        {this.state.loading && <Spinner/>}
 
         <div className="row">
           {this.state.results.map((element) => {
