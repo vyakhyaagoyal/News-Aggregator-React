@@ -4,79 +4,68 @@ import NewsItem from './NewsItem'
 export class News extends Component {
   constructor() {
     super();
-    this.links = new Set();
 
     this.state = {
       results: [],
       loading: false,
-      page:1,
+      page: 1,
       nextPage: null,
     }
   }
 
   async componentDidMount() {
-    let api="https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en";
+    let api = "https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1";
     let data = await fetch(api);
-    let parsedData=await data.json();
+    let parsedData = await data.json();
     let results = parsedData.results;
 
-  const filteredResults = results.filter((article) => {
-  if (this.links.has(article.link)) {
-    return false;
-  } else {
-    this.links.add(article.link);
-    return true;
-  }
-});
-
     this.setState(
-      {results:filteredResults,
+      {
+        results: results,
         nextPage: parsedData.nextPage,
-        page:1
+        page: 1,
+        totalResults: parsedData.totalResults
       }
     );
   };
 
   handleNextClick = async () => {
-    // if (!this.state.nextPage) return;
 
-    // this.setState({ loading: true });
-
-    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&page=${this.state.nextPage}`;
+    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.nextPage}`;
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
 
-  const filteredResults = results.filter((article) => {
-  if (this.links.has(article.link)) {
-    return false;
-  } else {
-    this.links.add(article.link);
-    return true;
-  }
-});
+    this.setState({
+      results: results,
+      nextPage: parsedData.nextPage,
+      page: this.state.page + 1,
+      loading: false
+    });
 
-  this.setState({
-    results: filteredResults,
-    nextPage: parsedData.nextPage,
-    page: this.state.page + 1,
-    loading: false
-  });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+  handlePreviousClick = async () => {
+    //   let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&page=${this.state.page - 1}`;
+    //   let data = await fetch(api);
+    //   let parsedData = await data.json();
+    //   let results = parsedData.results;
 
-  handlePreviousClick=()=>{
-
+    //   this.setState({
+    //   results: parsedData.results,
+    //   nextPage: parsedData.nextPage,
+    //   page: this.state.page - 1,
+    //   loading: false
+    // });
   }
 
   render() {
-    
+
     // let { title, description, imageurl, link } = this.props;
     return (
       <div className='container'>
         <h2 className='text-center'>News Mirchi - Top Headlines</h2>
-
 
 
         <div className="row">
@@ -92,7 +81,7 @@ export class News extends Component {
           })}
 
           <div className="container d-grid d-md-flex justify-content-md-center">
-            <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" disabled={this.state.page === 1} onClick={this.handlePreviousClick}>&larr; Previous page</button>
+            <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" disabled={this.state.page <= 1} onClick={this.handlePreviousClick}>&larr; Previous page</button>
             <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" onClick={this.handleNextClick} disabled={!this.state.nextPage}>Next page &rarr;</button>
           </div>
 
