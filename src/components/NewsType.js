@@ -141,7 +141,7 @@ export class News extends Component {
         {this.state.loading && <Spinner />}
 
         <div className="row">
-          {this.state.results.map((element) => {
+          {!this.state.loading && this.state.results.map((element) => {
             // console.log(element);
             return <div className="col md-3" key={element.article_id}>
               <NewsItem
