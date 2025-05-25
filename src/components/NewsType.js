@@ -23,8 +23,9 @@ export class News extends Component {
     }
   }
 
-  async componentDidMount() {
-    let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
+
+  async updateNews(){
+    const api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
     this.setState({ loading: true });
     let data = await fetch(api);
     let parsedData = await data.json();
@@ -39,6 +40,10 @@ export class News extends Component {
         loading: false
       }
     );
+  }
+
+  async componentDidMount() {
+    this.updateNews();
   };
 
   async componentDidUpdate(prevProps){
