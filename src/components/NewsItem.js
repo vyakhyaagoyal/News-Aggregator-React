@@ -7,7 +7,7 @@ export class NewsItem extends Component {
             
             <div className='my-2 d-flex justify-content-center'>
                 <div className="card mx-2 my-2" style={{ width: "20rem" }}>
-                    <span className='position-absolute top-0 translate-middle badge rounded-pill bg-success'>{source_name}</span>
+                    <span className='position-absolute top-0 start-50 translate-middle badge rounded-pill bg-success'>Source: {source_name}</span>
                     <img src={imageurl} className="card-img-top" alt="news" style={{height:"150px", width:"100%", objectFit:"cover"}} />
                     <div className="card-body">
                         <h4 className="card-title">{title}...</h4>

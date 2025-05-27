@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component';
 // import { Spinner } from 'react-bootstrap';
 
+
 export class News extends Component {
   static defaultProps = {
     category: 'top',
@@ -14,6 +15,7 @@ export class News extends Component {
   static propTypes = {
     category: PropTypes.string,
   }
+  
 
   constructor(props) {
     super(props);
@@ -24,7 +26,9 @@ export class News extends Component {
       page: 1,
       nextPage: null,
       pageHistory: ["1"],
-      totalResults: 0
+      totalResults: 0,
+      // progress:10,
+      // setProgress: this.setProgressFunction
     }
 
   }
@@ -32,8 +36,10 @@ export class News extends Component {
   capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
+  
 
   async updateNews() {
+    this.props.setProgress(10);
     const api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
     this.setState({ loading: true });
     let data = await fetch(api);
@@ -49,6 +55,7 @@ export class News extends Component {
         loading: false
       }
     );
+    this.props.setProgress(100);
   }
 
   async componentDidMount() {
@@ -56,23 +63,10 @@ export class News extends Component {
   };
 
   async componentDidUpdate(prevProps) {
+    
     if (prevProps.category !== this.props.category) {
       this.setState({ loading: true });
-      let api = `https://newsdata.io/api/1/latest?apikey=pub_880827ef8ff6ebbde268c8103dbac32e0a645&language=en&removeduplicate=1&category=${this.props.category}`;
-      let data = await fetch(api);
-      let parsedData = await data.json();
-      let results = parsedData.results;
-
-      this.setState(
-        {
-          results: results,
-          nextPage: parsedData.nextPage,
-          page: 1,
-          totalResults: parsedData.totalResults,
-          loading: false,
-
-        }
-      );
+      this.updateNews();
       document.title = `${this.capitalizeFirstLetter(this.props.category)}- News Observer`;
     }
   }
@@ -158,6 +152,7 @@ export class News extends Component {
     // let { title, description, imageurl, link } = this.props;
     return (
       <>
+      
         <h2 className='text-center'>News Observer- Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h2>
         {this.state.loading && <Spinner />}
 
