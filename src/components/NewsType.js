@@ -27,8 +27,6 @@ export class News extends Component {
       nextPage: null,
       pageHistory: ["1"],
       totalResults: 0,
-      // progress:10,
-      // setProgress: this.setProgressFunction
     }
 
   }
@@ -40,7 +38,7 @@ export class News extends Component {
 
   async updateNews() {
     this.props.setProgress(10);
-    const api = `https://newsdata.io/api/1/latest?apikey={this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}`;
+    const api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}`;
     this.setState({ loading: true });
     let data = await fetch(api);
     let parsedData = await data.json();
@@ -76,7 +74,7 @@ export class News extends Component {
 
   //   const history = [...this.state.pageHistory, this.state.nextPage];
   //   try {
-  //     let api = `https://newsdata.io/api/1/latest?apikey={this.props.apiKey}&language=en&removeduplicate=1&page=${this.state.nextPage}&category=${this.props.category}`;
+  //     let api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&page=${this.state.nextPage}&category=${this.props.category}`;
   //     this.setState({ loading: true });
   //     let data = await fetch(api);
   //     let parsedData = await data.json();
@@ -107,7 +105,7 @@ export class News extends Component {
   //   // Get previous page token (before last)
   //   const prevPageToken = history[history.length - 1];
   //   try {
-  //     let api = `https://newsdata.io/api/1/latest?apikey={this.props.apiKey}&language=en&removeduplicate=1&page=${prevPageToken}&category=${this.props.category}`;
+  //     let api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&page=${prevPageToken}&category=${this.props.category}`;
   //     this.setState({ loading: true });
   //     let data = await fetch(api);
   //     let parsedData = await data.json();
@@ -130,7 +128,7 @@ export class News extends Component {
   // };
 
   fetchMoreData = async() => {
-    const api = `https://newsdata.io/api/1/latest?apikey={this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}`;
+    const api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}&page=${this.state.nextPage}`;
     // this.setState({ loading: true });
     let data = await fetch(api);
     let parsedData = await data.json();
@@ -140,7 +138,6 @@ export class News extends Component {
       {
         results: this.state.results.concat(results),
         nextPage: parsedData.nextPage,
-        page: 1,
         totalResults: parsedData.totalResults,
         // loading: false
       }
