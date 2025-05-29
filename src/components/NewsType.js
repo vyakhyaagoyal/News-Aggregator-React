@@ -14,8 +14,7 @@ const NewsType=(props)=>{
   //eslint-disable-next-line
   const [page,setPage]=useState(1);
   const [nextPage,setNextPage]=useState(null);
-  //eslint-disable-next-line
-  const [pageHistory,setPageHistory]=useState(["1"]);
+  // const [pageHistory,setPageHistory]=useState(["1"]);
   const [totalResults,setTotalResults]=useState(0);
 
 
@@ -31,6 +30,7 @@ const NewsType=(props)=>{
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
+    // console.log(results);
 
     props.setProgress(70);
     setResults(results);
