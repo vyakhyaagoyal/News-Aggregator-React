@@ -1,90 +1,73 @@
-import React, { Component } from 'react'
+import React, {useEffect,useState,useCallback} from 'react'
 import NewsItem from './NewsItem'
-import Spinner from './spinner'
+import Spinner from './Spinner';
 import PropTypes from 'prop-types'
 // import Badge from 'react-bootstrap/Badge';
 import InfiniteScroll from 'react-infinite-scroll-component';
 // import { Spinner } from 'react-bootstrap';
 
 
-export class News extends Component {
-  static defaultProps = {
-    category: 'top',
-  }
+const NewsType=(props)=>{
+  // console.log("Category prop:", props.category);
+  const [results,setResults]=useState([])
+  const [loading,setLoading]=useState(true)
+  const [page,setPage]=useState(1)
+  const [nextPage,setNextPage]=useState(null)
+  const [pageHistory,setPageHistory]=useState(["1"])
+  const [totalResults,setTotalResults]=useState(0)
 
-  static propTypes = {
-    category: PropTypes.string,
-  }
-  
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      results: [],
-      loading: true,
-      page: 1,
-      nextPage: null,
-      pageHistory: ["1"],
-      totalResults: 0,
-    }
-
-  }
-
-  capitalizeFirstLetter = (string) => {
+  const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   
 
-  async updateNews() {
-    this.props.setProgress(10);
-    const api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}`;
-    this.setState({ loading: true });
+  const updateNews=useCallback(async()=> {
+    props.setProgress(10);
+    const api = `https://newsdata.io/api/1/latest?apikey=${props.apiKey}&language=en&removeduplicate=1&category=${props.category}`;
+    setLoading(true);
+    
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
 
-    this.setState(
-      {
-        results: results,
-        nextPage: parsedData.nextPage,
-        page: 1,
-        totalResults: parsedData.totalResults,
-        loading: false
-      }
-    );
-    this.props.setProgress(100);
-  }
-
-  async componentDidMount() {
-    this.updateNews();
-  };
-
-  async componentDidUpdate(prevProps) {
+    setResults(results)
+    setNextPage(parsedData.nextPage)
+    setPage(1)
+    setTotalResults(parsedData.totalResults)
+    setLoading(false)
     
-    if (prevProps.category !== this.props.category) {
-      this.setState({ loading: true });
-      this.updateNews();
-      document.title = `${this.capitalizeFirstLetter(this.props.category)}- News Observer`;
-    }
-  }
+    props.setProgress(100);
+  },[props.apiKey, props.category,props.setProgress]);
+
+  useEffect(() => {
+    updateNews();
+  }, []);
+
+  useEffect(() => {
+    // if (prevProps.category !== props.category) {
+      setLoading(true);
+      updateNews();
+      document.title = `${capitalizeFirstLetter(props.category)}- News Observer`;
+    //}
+  },[props.category]);
 
   // handleNextClick = async () => {
-  //   if (!this.state.nextPage) return;
+  //   if (!nextPage) return;
 
-  //   const history = [...this.state.pageHistory, this.state.nextPage];
+  //   const history = [...pageHistory, nextPage];
   //   try {
-  //     let api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&page=${this.state.nextPage}&category=${this.props.category}`;
-  //     this.setState({ loading: true });
+  //     let api = `https://newsdata.io/api/1/latest?apikey=${props.apiKey}&language=en&removeduplicate=1&page=${nextPage}&category=${props.category}`;
+  //     setLoading(true)
   //     let data = await fetch(api);
   //     let parsedData = await data.json();
   //     // let results = parsedData.results;
   //     const articles = Array.isArray(parsedData.results) ? parsedData.results : [];
 
-  //     this.setState({
+  //     setState({
   //       results: articles,
   //       nextPage: parsedData.nextPage,
-  //       page: this.state.page + 1,
+  //       page: page + 1,
   //       pageHistory: history,
   //       loading: false
   //     });
@@ -97,25 +80,25 @@ export class News extends Component {
   // };
 
   // handlePreviousClick = async () => {
-  //   if (this.state.page <= 1 || this.state.pageHistory.length < 2) return;
+  //   if (page <= 1 || pageHistory.length < 2) return;
 
-  //   const history = [...this.state.pageHistory];
+  //   const history = [...pageHistory];
   //   // Remove current page token
   //   history.pop();
   //   // Get previous page token (before last)
   //   const prevPageToken = history[history.length - 1];
   //   try {
-  //     let api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&page=${prevPageToken}&category=${this.props.category}`;
-  //     this.setState({ loading: true });
+  //     let api = `https://newsdata.io/api/1/latest?apikey=${props.apiKey}&language=en&removeduplicate=1&page=${prevPageToken}&category=${props.category}`;
+  //     setState({ loading: true });
   //     let data = await fetch(api);
   //     let parsedData = await data.json();
   //     // let results = parsedData.results;
   //     const articles = Array.isArray(parsedData.results) ? parsedData.results : [];
 
-  //     this.setState({
+  //     setState({
   //       results: articles,
   //       nextPage: parsedData.nextPage,
-  //       page: this.state.page - 1,
+  //       page: page - 1,
   //       pageHistory: history,
   //       loading: false
 
@@ -127,45 +110,40 @@ export class News extends Component {
   //   }
   // };
 
-  fetchMoreData = async() => {
-    const api = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&language=en&removeduplicate=1&category=${this.props.category}&page=${this.state.nextPage}`;
-    // this.setState({ loading: true });
+  const fetchMoreData = async() => {
+    props.setProgress(10);
+    const api = `https://newsdata.io/api/1/latest?apikey=${props.apiKey}&language=en&removeduplicate=1&category=${props.category}&page=${nextPage}`;
+    setLoading(true)
     let data = await fetch(api);
     let parsedData = await data.json();
     let results = parsedData.results;
 
-    this.setState(
-      {
-        results: this.state.results.concat(results),
-        nextPage: parsedData.nextPage,
-        totalResults: parsedData.totalResults,
-        // loading: false
-      }
-    );
+    setResults(prevResults=>prevResults.concat(results));
+    setNextPage(parsedData.nextPage);
+    setTotalResults(parsedData.totalResults);
+    setLoading(false)
   };
 
-  render() {
-
-    // let { title, description, imageurl, link } = this.props;
+    // let { title, description, imageurl, link } = props;
     return (
       <>
       
-        <h2 className='text-center'>News Observer- Top {this.capitalizeFirstLetter(this.props.category)} Headlines</h2>
-        {this.state.loading && <Spinner />}
+        <h2 className='text-center my-4'>News Observer- Top {capitalizeFirstLetter(props.category==="top"?"general":props.category)} Headlines</h2>
+        {loading && <Spinner />}
 
         <InfiniteScroll
-          dataLength={this.state.results.length}
-          next={this.fetchMoreData}
-          hasMore={this.state.results.length !== this.state.totalResults}
-          loader={<Spinner />}
+          dataLength={results.length}
+          next={fetchMoreData}
+          hasMore={results.length !== totalResults}
+          loader={<Spinner/>}
           endMessage={
             <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
+              <b>Aaj ke liye itna hi. Dhanyawaad!</b>
             </p>
           }>
 
           <div className="row">
-            {this.state.results.map((element) => {
+            {results.map((element) => {
               // console.log(element);
               return <div className="col md-3" key={element.article_id}>
                 <NewsItem
@@ -183,17 +161,21 @@ export class News extends Component {
         </InfiniteScroll>
 
         {/* <div className="container d-grid d-md-flex justify-content-md-center">
-          <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" disabled={this.state.page <= 1} onClick={this.handlePreviousClick}>&larr; Previous page</button>
-          <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" onClick={this.handleNextClick} disabled={!this.state.nextPage}>Next page &rarr;</button>
+          <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" disabled={page <= 1} onClick={handlePreviousClick}>&larr; Previous page</button>
+          <button type="button" className="btn btn-primary my-4 mx-2 btn-lg" onClick={handleNextClick} disabled={!nextPage}>Next page &rarr;</button>
         </div>
 
         <div className="container">
-          <Badge pill bg='success' text="light" className='mx-3 my-3 d-flex justify-content-center align-items-center' style={{ height: '25px', fontSize: '20px' }}> Page {this.state.page}/{Math.ceil(this.state.totalResults / 10)}</Badge>
+          <Badge pill bg='success' text="light" className='mx-3 my-3 d-flex justify-content-center align-items-center' style={{ height: '25px', fontSize: '20px' }}> Page {page}/{Math.ceil(totalResults / 10)}</Badge>
         </div> */}
 
       </ >
     )
-  }
+  
 }
 
-export default News
+  NewsType.propTypes = {
+    category: PropTypes.string,
+  }
+
+export default NewsType
