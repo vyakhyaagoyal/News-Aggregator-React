@@ -9,18 +9,19 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 const NewsType=(props)=>{
   // console.log("Category prop:", props.category);
-  const [results,setResults]=useState([])
-  const [loading,setLoading]=useState(true)
-  const [page,setPage]=useState(1)
-  const [nextPage,setNextPage]=useState(null)
-  const [pageHistory,setPageHistory]=useState(["1"])
-  const [totalResults,setTotalResults]=useState(0)
+  const [results,setResults]=useState([]);
+  const [loading,setLoading]=useState(true);
+  //eslint-disable-next-line
+  const [page,setPage]=useState(1);
+  const [nextPage,setNextPage]=useState(null);
+  //eslint-disable-next-line
+  const [pageHistory,setPageHistory]=useState(["1"]);
+  const [totalResults,setTotalResults]=useState(0);
 
 
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
-  
 
   const updateNews=useCallback(async()=> {
     props.setProgress(10);
@@ -31,17 +32,19 @@ const NewsType=(props)=>{
     let parsedData = await data.json();
     let results = parsedData.results;
 
-    setResults(results)
-    setNextPage(parsedData.nextPage)
-    setPage(1)
-    setTotalResults(parsedData.totalResults)
-    setLoading(false)
-    
+    props.setProgress(70);
+    setResults(results);
+    setNextPage(parsedData.nextPage);
+    setPage(1);
+    setTotalResults(parsedData.totalResults);
+    setLoading(false);
     props.setProgress(100);
-  },[props.apiKey, props.category,props.setProgress]);
+    //eslint-disable-next-line
+  },[props.apiKey, props.category,props.setProgress]); //dependency array
 
   useEffect(() => {
     updateNews();
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const NewsType=(props)=>{
       updateNews();
       document.title = `${capitalizeFirstLetter(props.category)}- News Observer`;
     //}
+    //eslint-disable-next-line
   },[props.category]);
 
   // handleNextClick = async () => {
@@ -111,7 +115,7 @@ const NewsType=(props)=>{
   // };
 
   const fetchMoreData = async() => {
-    props.setProgress(10);
+    // props.setProgress(10);
     const api = `https://newsdata.io/api/1/latest?apikey=${props.apiKey}&language=en&removeduplicate=1&category=${props.category}&page=${nextPage}`;
     setLoading(true)
     let data = await fetch(api);
@@ -122,14 +126,14 @@ const NewsType=(props)=>{
     setNextPage(parsedData.nextPage);
     setTotalResults(parsedData.totalResults);
     setLoading(false)
+    // props.setProgress(100);
   };
 
     // let { title, description, imageurl, link } = props;
     return (
       <>
-      
-        <h2 className='text-center my-4'>News Observer- Top {capitalizeFirstLetter(props.category==="top"?"general":props.category)} Headlines</h2>
-        {loading && <Spinner />}
+        <h2 className='text-center' style={{marginTop:'70px'}}>News Observer- Top {capitalizeFirstLetter(props.category==="top"?"general":props.category)} Headlines</h2>
+        {loading && <Spinner/>}
 
         <InfiniteScroll
           dataLength={results.length}
