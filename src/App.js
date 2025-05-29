@@ -25,7 +25,7 @@ const App=()=>{
           <Navbar />
 
           <Routes>
-            <Route path="/News-Aggregator-React/" key="top" element={<NewsType setProgress={setProgress} apiKey={apiKey} category="top"/>} />
+            <Route path="/" key="top" element={<NewsType setProgress={setProgress} apiKey={apiKey} category="top"/>} />
             <Route exact path="/business" key="business" element={<NewsType setProgress={setProgress} apiKey={apiKey} category="business" />} />
             <Route exact path="/entertainment" key="entertainment" element={<NewsType setProgress={setProgress} apiKey={apiKey} category="entertainment" />} />
             <Route exact path="/health" key="health" element={<NewsType setProgress={setProgress} apiKey={apiKey} category="health" />} />
