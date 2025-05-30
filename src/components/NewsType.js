@@ -1,10 +1,9 @@
-import React, {useEffect,useState,useCallback} from 'react'
-import NewsItem from './NewsItem'
+import {useEffect,useState,useCallback} from 'react';
+import NewsItem from './NewsItem';
 import Spinner from './Spinner';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 // import Badge from 'react-bootstrap/Badge';
 import InfiniteScroll from 'react-infinite-scroll-component';
-// import { Spinner } from 'react-bootstrap';
 
 
 const NewsType=(props)=>{
@@ -143,7 +142,7 @@ const NewsType=(props)=>{
           loader={<Spinner/>}
           endMessage={
             <p style={{ textAlign: 'center' }}>
-              <b>Aaj ke liye itna hi. Dhanyawaad!</b>
+              <b>Yay, You saw it all!</b>
             </p>
           }>
 
