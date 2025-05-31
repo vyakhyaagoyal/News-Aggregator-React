@@ -15,7 +15,7 @@ const App = () => {
   const [progress, setProgress] = useState(0);
   const [showLanding, setShowLanding] = useState(true);
 
-  const apiKey = "pub_37be173eda294d4791a627d2d060cd3f";
+  const apiKey = process.env.REACT_APP_NEWS_API;
 
   return (
     // <LandingPage/>
