@@ -28,7 +28,7 @@ const NewsType=(props)=>{
     
     let data = await fetch(api);
     let parsedData = await data.json();
-    console.log(parsedData);
+    // console.log(parsedData);
     let results = parsedData.results;
     // console.log(results);
 
