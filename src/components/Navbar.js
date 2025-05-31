@@ -31,7 +31,7 @@ const Navbar = () => {
                                 </ul>
                             </li>
 
-                            <Link className="nav-link active" to="/">About</Link>
+                            <Link className="nav-link active" to="/about">About</Link>
 
                         </div>
                     </div>

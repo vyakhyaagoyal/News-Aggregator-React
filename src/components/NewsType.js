@@ -9,7 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 const NewsType=(props)=>{
   // console.log("Category prop:", props.category);
   const [results,setResults]=useState([]);
-  const [loading,setLoading]=useState(true);
+  const [loading,setLoading]=useState(false);
   //eslint-disable-next-line
   const [page,setPage]=useState(1);
   const [nextPage,setNextPage]=useState(null);
@@ -28,7 +28,7 @@ const NewsType=(props)=>{
     
     let data = await fetch(api);
     let parsedData = await data.json();
-    // console.log(parsedData);
+    console.log(parsedData);
     let results = parsedData.results;
     // console.log(results);
 
@@ -43,8 +43,10 @@ const NewsType=(props)=>{
   },[props.apiKey, props.category,props.setProgress]); //dependency array
 
   useEffect(() => {
+    props.setShowLanding(true);
     updateNews();
-    //eslint-disable-next-line
+    props.setShowLanding(false);
+        //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -141,9 +143,10 @@ const NewsType=(props)=>{
           hasMore={results.length !== totalResults}
           loader={<Spinner/>}
           endMessage={
+            results.length > 0 && results.length === totalResults ? (
             <p style={{ textAlign: 'center' }}>
               <b>Yay, You saw it all!</b>
-            </p>
+            </p>):null
           }>
 
           <div className="row">
